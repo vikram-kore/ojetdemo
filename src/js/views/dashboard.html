@@ -1,0 +1,87 @@
+<div class="oj-hybrid-applayout-page">
+  <div class="oj-applayout-fixed-top">
+    <header role="banner" class="oj-hybrid-applayout-header dashboardlist">
+      <oj-module config="[[headerConfig]]"></oj-module>
+      <div class="oj-flex-bar-middle">
+          <oj-input-search id="search1"
+            class="oj-input-search-hero"
+            placeholder="Search..."
+            on-raw-value-changed="[[filterChanged]]">
+          </oj-input-search>
+      </div>
+      <div class="oj-flex-bar-end">
+        <div class="float-row-left">
+          <oj-bind-text value="{{recordcount}}"></oj-bind-text>
+         Active Accounts 
+        </div>
+        <div class="float-row-right">
+          <oj-button id='btnGo' on-oj-action='[[openListener]]' display='icons'>
+            <span slot='startIcon' class='fa fa-filter'></span>
+          </oj-button>
+        </div>
+      </div>
+    </header>
+  </div>
+  <div class="oj-applayout-content">
+    <div role="main" class="oj-hybrid-applayout-content dashboardview">
+      <oj-list-view id="dashboardlistview" aria-label="list to show selection features" 
+          data="[[datasource]]">
+          <template slot="itemTemplate" data-oj-as="item">
+              <li>
+                  <div class="first_col">
+                    <div class="oj-typography-body-md">
+                      <oj-bind-text value="[[item.data.OrganizationName]]"></oj-bind-text>
+                    </div>
+                    <div class="oj-typography-body-sm">
+                      <oj-bind-text value="[[item.data.PartyNumber]]"></oj-bind-text>
+                    </div>
+                    <div class="oj-typography-body-xs oj-text-color-secondary">
+                      <oj-bind-text value="[[item.data.OrganizationDEO_Status_c]]"> </oj-bind-text>
+                    </div>
+                  </div>
+                  <div class="oj-typography-body-md oj-text-color-secondary second_col">
+                    <oj-bind-if test="[[item.data.LastVisit]]">
+                      <p class="display-field" data-bind="text: moment(item.data.LastVisit).format('MMM DD YYYY')"></p>
+                    </oj-bind-if>
+                  </div>
+                  <div class="oj-typography-body-md oj-text-color-secondary third_col">
+                    <oj-bind-if test="[[item.data.NextVisit]]">
+                      <p class="display-field" data-bind="text: moment(item.data.NextVisit).format('MMM DD YYYY')"></p>
+                    </oj-bind-if>
+                  </div>
+              </li>
+          </template>
+      </oj-list-view>
+      <oj-popup id="popup1" class="demo-popup"
+        tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+        position.at.horizontal="center" position.at.vertical="bottom"
+        position.of="window" position.offset.y="-10"
+        modality="modal" on-oj-animate-start="[[startAnimationListener]]" style="width:100%;">
+          <div class="demo-popup-body">
+            <div class="demo-popup-header"><h5>Filter</h5></div>
+            <div class="demo-popup-content">
+              <oj-checkboxset id="checkboxSetId"
+                label-hint="Sales Profile Status"
+                label-edge="inside"
+                value="{{SalesProfileStatuscheckboxfilter}}">
+                <oj-bind-for-each data="[[colorOptions]]">
+                  <template>
+                    <oj-option value="[[$current.data.id]]">
+                      <oj-bind-text value="[[$current.data.value]]"></oj-bind-text>
+                    </oj-option>
+                  </template>
+                </oj-bind-for-each>
+              </oj-checkboxset>
+            </div>
+            <div class="demo-popup-footer">
+              <oj-button id="btnCancel"  on-oj-action="[[cancelListener]]">
+                Apply
+              </oj-button>
+            </div>
+          </div>    
+      </oj-popup>
+
+      <oj-button on-oj-action="[[gotoaddaccountlink]]" class="dashboardaddaccountlink">Add Account</oj-button>
+    </div>
+  </div>
+</div>

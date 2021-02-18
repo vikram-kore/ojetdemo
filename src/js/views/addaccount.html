@@ -1,0 +1,211 @@
+<div class="oj-hybrid-applayout-page">
+  <div class="oj-applayout-fixed-top">
+    <header role="banner" class="oj-flex-bar oj-hybrid-applayout-header oj-sm-align-items-center addaccountheader" style="z-index: 1;" class="demo-transparent-header oj-hybrid-applayout-header-no-border">
+      <div class="oj-flex-bar-start">
+        <oj-button class='demo-back-button' on-oj-action='[[goBack]]' display='icons' chroming='half'>
+          <span slot='startIcon' class='oj-hybrid-applayout-header-icon-back oj-fwk-icon'></span>
+          Go Back
+        </oj-button>
+      </div>
+      <div class="oj-hybrid-applayout-bar-title" style="min-width:65%;">
+          <h1 class="oj-hybrid-applayout-header-title">
+            Add Account
+          </h1>
+      </div>
+      <div class="oj-flex-bar-middle">
+          <div class="step_progressbar">
+            <div class="step_progressbartxt">
+              <oj-bind-text value="[[steptxt]]"></oj-bind-text>
+            </div>
+            <oj-progress-bar value="{{progressValue}}"></oj-progress-bar>
+          </div>
+      </div>
+    </header>
+  </div>
+  <!-- This is where your main page content will be loaded -->
+  <div class="oj-applayout-content addaccountbody">
+    <div role="main" class="oj-hybrid-applayout-content">
+        <oj-train id="addaccounttrain"
+          class="oj-train-stretch oj-sm-margin-4x-horizontal"
+          on-selected-step-changed="[[update]]"
+          selected-step="{{selectedStepValue}}"
+          steps="[[stepArray]]">
+        </oj-train>
+        
+          
+        <oj-switcher value="[[selectedStepValue]]" >
+          <div slot="25" id="home-tab-panel" role="tabpanel" aria-labelledby="home-tab">
+            <div class="demo-tab-content">
+                <strong>Basic Information</strong><br><br>
+                <oj-input-text id="accname" value="{{accountforminfo.accname}}" label-hint="Account Name" label-edge="inside" required='true' autofocus></oj-input-text>
+                <oj-select-single id="channel" label-hint="Select Item"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.channel}}' 
+                      data="[[channelsdp]]" required='true'>
+                </oj-select-single>
+                <oj-select-single id="type" label-hint="Select Item"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.type}}' 
+                      data="[[typesdp]]" required='true'>
+                </oj-select-single>
+                <oj-radioset id="accclass" label-hint='Class' value="{{accountforminfo.accclass}}"
+                    aria-controls="myform" required='true'>
+                    <oj-option value="W">Wholesale</oj-option>
+                    <oj-option value="WR">Retail-Wholesale</oj-option>
+                    <oj-option value="R">Retail</oj-option>
+                </oj-radioset>
+
+                <div class="addaccountbtns">
+                  <div class="halfbtn"><oj-button on-oj-action="[[goBack]]">Cancel</oj-button></div>
+                  <div class="halfbtn"><oj-button class="nxtbtn" on-oj-action="[[gotonextstep]]">Next</oj-button></div>
+                </div>
+            </div>
+          </div>
+          <div slot="50" id="blogs-tab-panel" role="tabpanel" aria-labelledby="blogs-tab">
+            <div class="demo-tab-content">
+              <strong>Primary Address</strong><br><br>
+              <oj-input-text id="address1" value="{{accountforminfo.address1}}"
+              label-hint="Address Line 1" label-edge="inside" required='true'></oj-input-text>
+              <oj-input-text id="address2" value="{{accountforminfo.address2}}"
+              label-hint="Address Line 2" label-edge="inside" required='true'></oj-input-text>
+              <oj-select-single id="country" label-hint="Select Item"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.country}}' 
+                      data="[[countriesdp]]" required='true'>
+              </oj-select-single>
+              <oj-select-single id="city" label-hint="Select Item"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.city}}' 
+                      data="[[citiesdp]]" required='true'>
+              </oj-select-single>
+              <oj-input-number id="pincode" value="{{accountforminfo.pincode}}"
+              label-hint="Pin Code" label-edge="inside" required='true' validators="[[pincodePatternValidator]]"></oj-input-number>
+              <oj-select-single id="state" label-hint="Select Item"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.state}}' 
+                      data="[[statesdp]]" required='true'>
+              </oj-select-single>
+              <br><br><strong>GPS Coordinate <oj-button on-oj-action="[[getLocation]]" style="float:right;">Get data from gps</oj-button></strong><br><br>
+              <oj-input-text id="latitude" value="{{accountforminfo.latitude}}"
+              label-hint="Latitude" label-edge="inside" required='true'></oj-input-text>
+              <oj-input-text id="longitude" value="{{accountforminfo.longitude}}"
+              label-hint="Longitude" label-edge="inside" required='true'></oj-input-text>
+              <oj-radioset id="addresstype" label-hint='Address Type' value="{{accountforminfo.addresstype}}"
+                   required='true'>
+                  <oj-option value="A">General</oj-option>
+                  <oj-option value="B">Bill to</oj-option>
+                  <oj-option value="C">ship to</oj-option>
+              </oj-radioset>
+              <div class="addaccountbtns">
+                <div class="halfbtn"><oj-button on-oj-action="[[gotolaststep]]">Back</oj-button></div>
+                <div class="halfbtn"><oj-button class="nxtbtn" on-oj-action="[[gotonextstep]]">Next</oj-button></div>
+              </div>
+            </div>
+          </div>
+          <div slot="75" id="settings-tab-panel" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="demo-tab-content">
+              <strong>Primary Contact ####</strong><br><br>
+              <oj-select-single id="ctype" label-hint="Type"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.ctype}}' 
+                      data="[[ctypesdp]]" required='true'>
+              </oj-select-single>
+              <oj-select-single id="cprefix" label-hint="Prefix"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.cprefix}}' 
+                      data="[[cprefixdp]]" required='true'>
+              </oj-select-single>
+              <oj-input-text id="fname" value="{{accountforminfo.fname}}"
+              label-hint="First Name" label-edge="inside" required='true'></oj-input-text>
+              <oj-input-text id="lname" value="{{accountforminfo.lname}}"
+              label-hint="Last Name" label-edge="inside" required='true'></oj-input-text>
+              <oj-select-single id="crole" label-hint="Role"
+                      placeholder='Select Item' 
+                      value='{{accountforminfo.crole}}' 
+                      data="[[crolesdp]]" required='true'>
+              </oj-select-single>
+
+              <div class="telephonediv">
+                <div class="telcodediv">
+                  <oj-select-single id="cccode" label-hint="Telephone Country Code"
+                          placeholder='Country code' 
+                          value='{{accountforminfo.cccode}}' 
+                          data="[[cccodedp]]" required='true'>
+                  </oj-select-single>
+                </div>
+                <div class="telno">
+                  <oj-input-number id="ctelephone" value="{{accountforminfo.ctelephone}}"
+                     label-hint="Telephone No." label-edge="inside" required='true' validators="[[mobilePatternValidator]]"></oj-input-number>
+                </div>
+              </div>
+              <oj-input-text id="cemailid" value="{{accountforminfo.cemailid}}"
+                     label-hint="Email Id" label-edge="inside" required='true' validators="[[emailPatternValidator]]" ></oj-input-text>
+              <oj-radioset id="cprefferedtype" label-hint='Preffered Meathod of Contact' value="{{accountforminfo.cprefferedtype}}"
+                  aria-controls="myform" required='true'>
+                  <oj-option value="Email">Email</oj-option>
+                  <oj-option value="Telephone">Telephone</oj-option>
+              </oj-radioset>
+              <div class="addaccountbtns">
+                <div class="halfbtn"><oj-button on-oj-action="[[gotolaststep]]">Back</oj-button></div>
+                <div class="halfbtn"><oj-button class="nxtbtn" on-oj-action="[[gotonextstep]]">Next</oj-button></div>
+              </div>
+            </div>
+          </div>
+          <div slot="100" id="settings-tab-panel" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="demo-tab-content">
+              <div class="addaccountbtns">
+                <strong>Additional Information</strong><br><br>
+                <oj-select-single id="aadditionalinfo" label-hint="Select Item"
+                          placeholder='Select Item' 
+                          value='{{accountforminfo.aadditionalinfo}}' 
+                          data="[[additionalinfodp]]" required='true'>
+                </oj-select-single>
+                <oj-input-text id="aadditionalinfo1" value="{{accountforminfo.aadditionalinfo1}}"
+                     label-hint="Additional 1" label-edge="inside" required='true'></oj-input-text>
+                <oj-select-single id="primaryconsumerinfo" label-hint="Select Item"
+                          placeholder='Select Item' 
+                          value='{{accountforminfo.primaryconsumerinfo}}' 
+                          data="[[primaryconsumerinfodp]]" required='true'>
+                </oj-select-single>
+                <oj-select-single id="secondaryconsumerinfo" label-hint="Select Item"
+                          placeholder='Select Item' 
+                          value='{{accountforminfo.secondaryconsumerinfo}}' 
+                          data="[[secondaryconsumerinfodp]]" required='true'>
+                </oj-select-single>
+
+                <div class="addaccountbtns">
+                  <div class="halfbtn"><oj-button on-oj-action="[[gotolaststep]]">Back</oj-button></div>
+                  <div class="halfbtn"><oj-button class="nxtbtn" on-oj-action="[[submitaccountinfo]]">Submit</oj-button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </oj-switcher>
+        <oj-button id="btnGo" on-oj-action="[[openListener]]" style="float:right;">Select Existing contact</oj-button>
+          <oj-popup id="pickcontactpopup" class="demo-popup"
+        tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+        position.at.horizontal="center" position.at.vertical="bottom"
+        position.of="window" position.offset.y="-10"
+        modality="modal" on-oj-animate-start="[[startAnimationListener]]" style="width:100%;">
+          <div class="demo-popup-body">
+            <div class="demo-popup-header"><h5>Filter</h5></div>
+            <div class="demo-popup-content">
+              
+            </div>
+            <div class="demo-popup-footer">
+              <div class="popuptwobuttons">
+                <oj-button id="btnCancel"  on-oj-action="[[cancelListener]]">
+                  Cancel
+                </oj-button>
+              </div>
+              <div class="popuptwobuttons">
+                <oj-button id="btnCancel"  on-oj-action="[[cancelListener]]">
+                  Apply
+                </oj-button>
+              </div>
+            </div>
+          </div>    
+      </oj-popup>
+    </div>
+  </div>
+</div>

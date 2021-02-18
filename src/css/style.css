@@ -1,0 +1,198 @@
+.oj-flex-bar-start{
+	position: absolute;
+	left: 3%;
+	top: 3%;
+	z-index: 1;
+}
+.oj-hybrid-applayout-bar-title{
+	position: absolute;
+	top: 20%;
+	width: 90%;
+}
+
+.oj-hybrid-applayout-header-title{
+	margin:0px auto;
+}
+
+.oj-hybrid-applayout-page{
+	background: #fff;
+}
+
+.dashboardlist{
+	height: 150px;
+}
+
+.dashboardlist .oj-flex-bar-middle{
+	position: absolute;
+    width: 90%;
+    top: 35%;
+    height: 45px;
+}
+
+.dashboardlist .oj-text-field-container{
+	height: 100%;
+	font-size: 15px;
+}
+
+.dashboardlist .oj-flex-bar-end{
+	position: absolute;
+    top: 68%;
+    width: 90%;
+}
+
+.dashboardlist .float-row-left{
+	padding: 10px 0px;
+    width: 80%;
+}
+
+.float-row-right{
+	width: 20%;
+}
+
+.float-row-right .oj-button{
+	float: right;
+}
+
+.dashboardlist .oj-hybrid-applayout-bar-title{
+	top: 10%;
+}
+
+#dashboardlistview .first_col{
+	width: 50%;
+	display: inline-block;
+}
+
+#dashboardlistview .second_col{
+	width: 23%;
+	display: inline-block;
+}
+
+#dashboardlistview .third_col{
+	width: 23%;
+	display: inline-block;
+}
+
+#dashboardlistview .first_col div{
+	padding: 0px 5px;
+}
+
+.step_progressbar{
+	width: 50%;
+    padding: 0px 10px;
+}
+
+.step_progressbartxt{
+	padding: 5px 0px;
+	text-align: center;
+}
+
+.addaccountheader{
+	height: 90px;
+}
+
+.addaccountheader .oj-flex-bar-middle{
+	position: absolute;
+    width: 90%;
+    top: 45%;
+    height: 45px;
+}
+
+.addaccountheader .oj-hybrid-applayout-bar-title{
+	position: absolute;
+    top: 15%;
+    width: 90%;
+}
+
+#addaccounttrain{
+	display: none;
+}
+
+.addaccountbtns .halfbtn{
+	display: inline-block;
+	width: 48%;
+}
+
+.addaccountbtns{
+	padding: 5px;
+	text-align: center;
+}
+
+.addaccountbtns oj-button{
+	width: 100%;
+}
+
+.addaccountbtns .halfbtn oj-button{
+	width: 100%;
+}
+
+.nxtbtn {
+	background: #2ca69e;
+	color: #fff;
+}
+
+.nxtbtn .oj-button-label{
+	color: #fff;
+}
+
+.demo-tab-content{
+	padding: 5px;
+}
+
+.telephonediv .telcodediv{
+	display: inline-block;
+	width: 38%;
+}
+
+.telephonediv .telno{
+	display: inline-block;
+	width: 60%;
+}
+
+.addaccountbody{
+	margin-top: 90px;
+	padding: 10px 0px;
+}
+
+.step_progressbar .oj-progress-bar-value{
+	background: #2ca69e;
+}
+
+#dashboardlistview li{
+	border-bottom: 1px solid #d5d4d4;
+    margin-bottom: 5px;
+}
+
+.dashboardview{
+	position: relative;
+}
+
+.dashboardaddaccountlink{
+	position: fixed;
+    right: 5%;
+    bottom: 9%;
+    background: #2ca69e;
+    border-radius: 10%;
+}
+
+.dashboardaddaccountlink .oj-button-text{
+	color: #fff;
+}
+
+.demo-popup-header{
+	text-align: center;
+}
+
+.demo-popup-footer oj-button{
+	width: 100%;
+}
+
+.popuptwobuttons{
+	width: 45%;
+	margin: 5px;
+	display: inline-block;
+
+}
+
+.demo-popup-footer{
+	text-align: center;
+}
