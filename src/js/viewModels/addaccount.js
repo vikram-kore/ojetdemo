@@ -360,6 +360,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
         });
       };
 
+      self.onLocationSuccess = function (position) {
+        self.accountforminfo.latitude(position.coords.latitude);
+        self.accountforminfo.longitude(position.coords.longitude);
+      };
+
+      function onLocationError(error) {
+        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+      }
+
+      self.goBack = function() {
+        window.history.back();
+      };
+
       self.emailPatternValidator = ko.observableArray([
           new AsyncRegExpValidator({
               pattern: "[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*",
@@ -383,23 +396,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
               messageDetail: "Not a valid Pincode format",
           }),
       ]);
-
-      ///
-
-      self.dataprovider = ko.observable();
-
-      self.onLocationSuccess = function (position) {
-        self.accountforminfo.latitude(position.coords.latitude);
-        self.accountforminfo.longitude(position.coords.longitude);
-      };
-
-      function onLocationError(error) {
-        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-      }
-
-      self.goBack = function() {
-        window.history.back();
-      };
 
       self.submitaccountinfo = function() {
           document.getElementById("aadditionalinfo").validate().then((result24) => {
@@ -527,10 +523,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
       function onError(contactError) {
           alert('onError!');
       };
-
-
-
-
     }
     return AddaccountViewModel;
   }
