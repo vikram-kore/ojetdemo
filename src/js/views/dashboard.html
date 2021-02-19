@@ -3,15 +3,15 @@
     <header role="banner" class="oj-hybrid-applayout-header dashboardlist">
       <oj-module config="[[headerConfig]]"></oj-module>
       <div class="oj-flex-bar-middle">
-          <oj-input-text id="search1"
+          <oj-input-search id="search1"
             class="oj-input-search-hero"
             placeholder="Search..."
             on-raw-value-changed="[[handleValueChanged]]">
-          </oj-input-text>
+          </oj-input-search>
       </div>
       <div class="oj-flex-bar-end">
         <div class="float-row-left">
-          <!-- <oj-bind-text value="{{recordcount}}"></oj-bind-text> -->
+          <oj-bind-text value="{{recordcount}}"></oj-bind-text>
          Active Accounts 
         </div>
         <div class="float-row-right">

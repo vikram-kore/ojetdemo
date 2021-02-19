@@ -3,7 +3,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     function DashboardViewModel() {
       var self = this;
 
-      self.filtertxt = ko.observable("");
+      self.recordcount = ko.observable(0);
 
       var resolve = Context.getPageContext().getBusyContext().addBusyState({description: "wait for header"});
 
@@ -39,6 +39,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       
 
       function parseItem(response) {
+        self.recordcount(self.recordcount()+1);
         return {
           SyncLocalId: response['SyncLocalId'],
             PartyNumber: response['PartyNumber'],
@@ -70,7 +71,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       
       this.handleValueChanged = (event) => {
-        self.filtertxt(event.detail.value)
         if (event.detail.value === null || event.detail.value === undefined || event.detail.value === "") {
           this.datasource(new CollectionDataProvider(this.listaccountscollection));
         };

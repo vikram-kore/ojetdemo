@@ -495,8 +495,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
             }
           }
         });
-          let popup = document.getElementById("pickcontactpopup");
-          popup.open("#btnGo");
+          
       };
 
       self.cancelListener = function() {
@@ -518,6 +517,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
                       "Country: "        + contacts[i].addresses[j].country);
               }
           }
+
+          let popup = document.getElementById("pickcontactpopup");
+          popup.open("#btnGo");
       };
 
       function onError(contactError) {
