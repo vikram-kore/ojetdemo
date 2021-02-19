@@ -3,14 +3,15 @@
     <header role="banner" class="oj-hybrid-applayout-header dashboardlist">
       <oj-module config="[[headerConfig]]"></oj-module>
       <div class="oj-flex-bar-middle">
-          <oj-input-search id="search1"
+          <oj-input-text id="search1"
             class="oj-input-search-hero"
-            placeholder="Search...">
-          </oj-input-search>
+            placeholder="Search..."
+            on-raw-value-changed="[[handleValueChanged]]">
+          </oj-input-text>
       </div>
       <div class="oj-flex-bar-end">
         <div class="float-row-left">
-          <oj-bind-text value="{{recordcount}}"></oj-bind-text>
+          <!-- <oj-bind-text value="{{recordcount}}"></oj-bind-text> -->
          Active Accounts 
         </div>
         <div class="float-row-right">
@@ -33,9 +34,6 @@
                     </div>
                     <div class="oj-typography-body-sm">
                       <oj-bind-text value="[[item.data.PartyNumber]]"></oj-bind-text>
-                    </div>
-                    <div class="oj-typography-body-xs oj-text-color-secondary">
-                      <oj-bind-text value="[[item.data.OrganizationDEO_Status_c]]"> </oj-bind-text>
                     </div>
                   </div>
                   <div class="oj-typography-body-md oj-text-color-secondary second_col">
@@ -62,7 +60,7 @@
               <oj-checkboxset id="checkboxSetId"
                 label-hint="Sales Profile Status"
                 label-edge="inside"
-                value="{{SalesProfileStatuscheckboxfilter}}">
+                value="{{SalesProfileStatuscheckboxfilter}}" on-raw-value-changed="[[handleValueChanged]]">
                 <oj-bind-for-each data="[[colorOptions]]">
                   <template>
                     <oj-option value="[[$current.data.id]]">
