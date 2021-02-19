@@ -104,7 +104,7 @@
           </div>
           <div slot="75" id="settings-tab-panel" role="tabpanel" aria-labelledby="settings-tab">
             <div class="demo-tab-content">
-              <strong>Primary Contact ####</strong><br><br>
+              <strong>Primary Contact <oj-button id="btnGo" on-oj-action="[[openListener]]" style="float:right;">Select Existing contact</oj-button></strong><br><br>
               <oj-select-single id="ctype" label-hint="Type"
                       placeholder='Select Item' 
                       value='{{accountforminfo.ctype}}' 
@@ -181,7 +181,7 @@
             </div>
           </div>
         </oj-switcher>
-        <oj-button id="btnGo" on-oj-action="[[openListener]]" style="float:right;">Select Existing contact</oj-button>
+        
           <oj-popup id="pickcontactpopup" class="demo-popup"
         tail="none" position.my.horizontal="center" position.my.vertical="bottom"
         position.at.horizontal="center" position.at.vertical="bottom"
@@ -190,7 +190,23 @@
           <div class="demo-popup-body">
             <div class="demo-popup-header"><h5>Filter</h5></div>
             <div class="demo-popup-content">
-              
+              <oj-list-view id="listview" aria-label="list to show selection features" 
+                  data="[[contactdataProvider]]" selected="{{contactselectedItems}}"
+                      selection-mode="[[contactselectedSelectionMode]]"
+                      scroll-policy="loadMoreOnScroll" 
+                      scroll-policy-options.fetch-size="5"
+                      style="height:400px"
+                      current-item="{{contactcurrentItem}}">
+                  <template slot="itemTemplate" data-oj-as="item">
+                    <li>
+                      <div class="oj-flex">
+                          <div class="oj-flex-item" style="width: 100%;">
+                            <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
+                          </div>
+                      </div>
+                    </li>
+                  </template>
+              </oj-list-view>
             </div>
             <div class="demo-popup-footer">
               <div class="popuptwobuttons">

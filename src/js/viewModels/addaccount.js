@@ -1,6 +1,6 @@
-define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbootstrap", "ojs/ojarraydataprovider", 'ojs/ojmodule-element-utils', "ojs/ojasyncvalidator-regexp", 'ojs/ojanimation', "ojs/ojprogress-bar", "ojs/ojbutton", "ojs/ojtrain", 'ojs/ojswitcher',
-  'ojs/ojradioset', 'ojs/ojrouter', "ojs/ojinputtext", "ojs/ojlabel", "ojs/ojselectsingle", "ojs/ojmessages", 'ojs/ojrouter', "ojs/ojformlayout", "ojs/ojinputnumber"],
-  function(oj, ko, CoreRouter, app, Bootstrap, ArrayDataProvider, moduleUtils, AsyncRegExpValidator, AnimationUtils) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbootstrap", "ojs/ojarraydataprovider", 'ojs/ojmodule-element-utils', "ojs/ojasyncvalidator-regexp", 'ojs/ojanimation', 'ojs/ojknockout-keyset', "ojs/ojprogress-bar", "ojs/ojbutton", "ojs/ojtrain", 'ojs/ojswitcher',
+  'ojs/ojradioset', 'ojs/ojrouter', "ojs/ojinputtext", "ojs/ojlabel", "ojs/ojselectsingle", "ojs/ojmessages", 'ojs/ojrouter', "ojs/ojformlayout", "ojs/ojinputnumber", 'ojs/ojlistview', 'ojs/ojcheckboxset', 'ojs/ojselectcombobox', 'ojs/ojlabel'],
+  function(oj, ko, CoreRouter, app, Bootstrap, ArrayDataProvider, moduleUtils, AsyncRegExpValidator, AnimationUtils, keySet) {
     function AddaccountViewModel(params) {
       var self = this;
       self.step = ko.observable(0);
@@ -465,6 +465,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
       };
 
       self.openListener = function() {
+
         var permissions = cordova.plugins.permissions;
         permissions.checkPermission(permissions.READ_CONTACTS, function( status ) {
           if ( status.hasPermission ) {
@@ -504,23 +505,90 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
           console.log();
       };
 
+      self.contactdataProvider = ko.observable();
+
+      self.contactselectedItems = new keySet.ObservableKeySet();
+        
+      this.contactselectedSelectionMode = ko.observable('single');
+
+      this.contactcurrentItem = ko.observable();
+
       function onSuccess(contacts) {
+          var contactsdata = [{"id":"1","name":"test"},{"id":"2","name":"Vikram Kore"},{"id":"3","name":"vk"},{"id":"4","name":"mack"},{"id":"5","name":"hitlr"}];
           for (var i = 0; i < contacts.length; i++) {
-              for (var j = 0; j < contacts[i].addresses.length; j++) {
-                  alert("Pref: "         + contacts[i].addresses[j].pref          + "\n" +
-                      "Type: "           + contacts[i].addresses[j].type          + "\n" +
-                      "Formatted: "      + contacts[i].addresses[j].formatted     + "\n" +
-                      "Street Address: " + contacts[i].addresses[j].streetAddress + "\n" +
-                      "Locality: "       + contacts[i].addresses[j].locality      + "\n" +
-                      "Region: "         + contacts[i].addresses[j].region        + "\n" +
-                      "Postal Code: "    + contacts[i].addresses[j].postalCode    + "\n" +
-                      "Country: "        + contacts[i].addresses[j].country);
-              }
+            contactsdata.push({ id:contacts[i].id, name: contacts[i].displayName})
           }
+          console.log(JSON.stringify(contactsdata));
+          this.allItems = ko.observableArray(contactsdata)
+          
+   
+          self.contactdataProvider(new ArrayDataProvider(this.allItems, {idAttribute: "id"}));
+
+          this.getDisplayValue = function(set) {
+              var text;
+              var arr = [];
+              if (set.isAddAll()) 
+              {
+                  text = "Everything selected";
+                  set.deletedValues().forEach(function(key)
+                  {
+                      arr.push(key);
+                  });
+                  if (arr.length > 0) 
+                  {
+                      text = text + " except: " + JSON.stringify(arr);
+                  }
+              } 
+              else 
+              {
+                  set.values().forEach(function(key)
+                  {
+                      arr.push(key);
+                  });    
+                  text = JSON.stringify(arr);                        
+              }
+              return text;
+          };
+  
+          this.handleCheckbox = function(id) {
+              return this.contactselectedItems().has(id) ? ["checked"] : [];
+          }.bind(this);
+  
+          this.checkboxListener = function (event) {
+              if (event.detail != null)
+              {
+                  var value = event.detail.value;
+                  var newSelectedItems;
+                  var id = event.target.dataset.rowId;
+                  if (value.length > 0)
+                  {
+                      if (this.contactselectedSelectionMode() === "single")
+                      {
+                          this.contactselectedItems.clear();
+                      }
+                      this.contactselectedItems.add([id]);
+                      this.contactcurrentItem(id);
+                  }
+                  else
+                  {
+                      this.contactselectedItems.delete([id]);
+                      this.contactcurrentItem('');
+                  }
+              }
+          }.bind(this);
+
+
+
 
           let popup = document.getElementById("pickcontactpopup");
           popup.open("#btnGo");
       };
+
+
+
+      //var contactsdata = [{"id":"1","name":"test"},{"id":"2","name":"Vikram Kore"},{"id":"3","name":"vk"},{"id":"4","name":"mack"},{"id":"5","name":"hitlr"}];
+          
+          
 
       function onError(contactError) {
           alert('onError!');
