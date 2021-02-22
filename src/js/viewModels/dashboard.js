@@ -1,8 +1,8 @@
 define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojcontext', 'ojs/ojbootstrap', 'ojs/ojanimation', 'ojs/ojmodel', 'ojs/ojcollectiondataprovider', 'ojs/ojinputtext', 'ojs/ojpopup', 'ojs/ojbutton', 'ojs/ojlistview', "ojs/ojinputsearch", "ojs/ojcheckboxset"],
  function(oj, ko, $, app, moduleUtils, Context, ojbootstrap_1, AnimationUtils, Model, CollectionDataProvider) {
-    function DashboardViewModel() {
+    function DashboardViewModel(params) {
       var self = this;
-
+      self.router = params.parentRouter;
       self.recordcount = ko.observable(0);
 
       var resolve = Context.getPageContext().getBusyContext().addBusyState({description: "wait for header"});
@@ -130,9 +130,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       };
 
       self.gotoaddaccountlink = function() {
-          var url = window.location.href;
-          url = url.split('?')[0];
-          window.location.href = url+"?ojr=addaccount";
+          self.router.go({path:'addaccount',params:{}});
       };
 
     }

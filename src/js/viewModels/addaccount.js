@@ -5,7 +5,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
       var self = this;
       self.step = ko.observable(0);
       self.steptxt = ko.observable("Step 1 / Step 4");
-
       self.progressValue = ko.pureComputed(() => {
           return Math.min(self.step(), 100);
       });
