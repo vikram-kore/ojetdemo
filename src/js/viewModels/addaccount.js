@@ -36,7 +36,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
       self.transitionCompleted = function() {
       };
 
-      this.gotonextstep = (event, context) => {
+      self.gotonextstep = (event, context) => {
           var train = document.getElementById("addaccounttrain");
           if(context.selectedStepValue()==25){
             document.getElementById("accname").validate().then((result1) => {
@@ -463,8 +463,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
           }
       };
 
-      self.openListener = function() {
 
+      self.contactdataProvider = ko.observable();
+
+      self.contactselectedItems = new keySet.ObservableKeySet();
+
+      self.currentItem = ko.observable();
+
+      self.allItems = ko.observableArray();
+
+      self.openListener = function() {
         var permissions = cordova.plugins.permissions;
         permissions.checkPermission(permissions.READ_CONTACTS, function( status ) {
           if ( status.hasPermission ) {
@@ -495,99 +503,82 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
             }
           }
         });
-          
       };
 
       self.cancelListener = function() {
           let popup = document.getElementById("pickcontactpopup");
           popup.close();
-          console.log();
       };
 
-      self.contactdataProvider = ko.observable();
-
-      self.contactselectedItems = new keySet.ObservableKeySet();
-        
-      this.contactselectedSelectionMode = ko.observable('single');
-
-      this.contactcurrentItem = ko.observable();
+      self.addcontacttoform = function() {
+        var carIndex = self.allItems().map(function (x) { return x.id; }).indexOf(self.currentItem());
+        console.log(self.allItems());
+          self.accountforminfo.fname(self.allItems()[carIndex].name);
+          let popup = document.getElementById("pickcontactpopup");
+          popup.close();
+      };
+      
 
       function onSuccess(contacts) {
-          var contactsdata = [{"id":"1","name":"test"},{"id":"2","name":"Vikram Kore"},{"id":"3","name":"vk"},{"id":"4","name":"mack"},{"id":"5","name":"hitlr"}];
+          var contactsdata = [];
           for (var i = 0; i < contacts.length; i++) {
             contactsdata.push({ id:contacts[i].id, name: contacts[i].displayName})
           }
-          console.log(JSON.stringify(contactsdata));
-          this.allItems = ko.observableArray(contactsdata)
-          
-   
-          self.contactdataProvider(new ArrayDataProvider(this.allItems, {idAttribute: "id"}));
-
-          this.getDisplayValue = function(set) {
-              var text;
-              var arr = [];
-              if (set.isAddAll()) 
-              {
-                  text = "Everything selected";
-                  set.deletedValues().forEach(function(key)
-                  {
-                      arr.push(key);
-                  });
-                  if (arr.length > 0) 
-                  {
-                      text = text + " except: " + JSON.stringify(arr);
-                  }
-              } 
-              else 
-              {
-                  set.values().forEach(function(key)
-                  {
-                      arr.push(key);
-                  });    
-                  text = JSON.stringify(arr);                        
-              }
-              return text;
-          };
-  
-          this.handleCheckbox = function(id) {
-              return this.contactselectedItems().has(id) ? ["checked"] : [];
-          }.bind(this);
-  
-          this.checkboxListener = function (event) {
-              if (event.detail != null)
-              {
-                  var value = event.detail.value;
-                  var newSelectedItems;
-                  var id = event.target.dataset.rowId;
-                  if (value.length > 0)
-                  {
-                      if (this.contactselectedSelectionMode() === "single")
-                      {
-                          this.contactselectedItems.clear();
-                      }
-                      this.contactselectedItems.add([id]);
-                      this.contactcurrentItem(id);
-                  }
-                  else
-                  {
-                      this.contactselectedItems.delete([id]);
-                      this.contactcurrentItem('');
-                  }
-              }
-          }.bind(this);
-
-
-
-
+          self.allItems = ko.observableArray(contactsdata)
+          self.contactdataProvider(new ArrayDataProvider(self.allItems, {idAttribute: "id"}));
           let popup = document.getElementById("pickcontactpopup");
           popup.open("#btnGo");
       };
 
+       self.getDisplayValue = function(set) {
+            var text;
+            var arr = [];
+            if (set.isAddAll()) 
+            {
+                text = "Everything selected";
+                set.deletedValues().forEach(function(key)
+                {
+                    arr.push(key);
+                });
+                if (arr.length > 0) 
+                {
+                    text = text + " except: " + JSON.stringify(arr);
+                }
+            } 
+            else 
+            {
+                set.values().forEach(function(key)
+                {
+                    arr.push(key);
+                });    
+                text = JSON.stringify(arr);                        
+            }
+            return text;
+        };
 
+        self.handleCheckbox = function(id) {
+            return self.contactselectedItems().has(id) ? ["checked"] : [];
+        }.bind(self);
 
-      //var contactsdata = [{"id":"1","name":"test"},{"id":"2","name":"Vikram Kore"},{"id":"3","name":"vk"},{"id":"4","name":"mack"},{"id":"5","name":"hitlr"}];
-          
-          
+        self.checkboxListener = function (event) {
+            if (event.detail != null)
+            {
+                var value = event.detail.value;
+                var newSelectedItems;
+                var id = event.target.dataset.rowId;
+                if (value.length > 0)
+                {
+                    self.contactselectedItems.clear();
+                    self.contactselectedItems.add([id]);
+                    self.currentItem(id);
+                }
+                else
+                {
+                    self.contactselectedItems.delete([id]);
+                    self.currentItem('');
+                }
+            }
+        }.bind(self);    
 
       function onError(contactError) {
           alert('onError!');

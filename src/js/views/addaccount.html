@@ -191,16 +191,26 @@
             <div class="demo-popup-header"><h5>Filter</h5></div>
             <div class="demo-popup-content">
               <oj-list-view id="listview" aria-label="list to show selection features" 
-                  data="[[contactdataProvider]]" selected="{{contactselectedItems}}"
-                      selection-mode="[[contactselectedSelectionMode]]"
+                      data="[[contactdataProvider]]" 
+                      selected="{{contactselectedItems}}"
+                      selection-mode="single"
                       scroll-policy="loadMoreOnScroll" 
                       scroll-policy-options.fetch-size="5"
                       style="height:400px"
-                      current-item="{{contactcurrentItem}}">
+                      current-item="{{currentItem}}">
                   <template slot="itemTemplate" data-oj-as="item">
                     <li>
                       <div class="oj-flex">
-                          <div class="oj-flex-item" style="width: 100%;">
+                          <div class="oj-flex-item" style="max-width:40px;display: inline-block;">
+                            <oj-checkboxset value='[[handleCheckbox(item.data.id)]]'
+                                            on-value-changed='[[checkboxListener]]'
+                                            class='oj-checkboxset-no-chrome oj-clickthrough-disabled'
+                                            :id="[['listview_checkboxset' + item.data.id]]"
+                                            :data-row-id="{{item.data.id}}">
+                                <oj-option :id="[['listview_checkbox' + item.data.id]]" value="checked"></oj-option>
+                            </oj-checkboxset>                  
+                          </div>
+                          <div class="oj-flex-item" style="width: 85%;padding: 5px;">
                             <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
                           </div>
                       </div>
@@ -215,7 +225,7 @@
                 </oj-button>
               </div>
               <div class="popuptwobuttons">
-                <oj-button id="btnCancel"  on-oj-action="[[cancelListener]]">
+                <oj-button id="btnApply"  on-oj-action="[[addcontacttoform]]">
                   Apply
                 </oj-button>
               </div>
