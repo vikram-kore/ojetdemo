@@ -69,34 +69,39 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       self.datasource(new CollectionDataProvider(self.listaccountscollection));
 
+      self.filter = ko.observable();
       
-      this.handleValueChanged = (event) => {
-        if (event.detail.value === null || event.detail.value === undefined || event.detail.value === "") {
-          this.datasource(new CollectionDataProvider(this.listaccountscollection));
-        };
-        if (this.filteredCollection === undefined) {
-          this.filteredCollection = this.listaccountscollection.clone();
-          this.filteredDataProvider = new CollectionDataProvider(this.filteredCollection);
-        }
-        var ret = this.listaccountscollection.where({
-          OrganizationName: {
-            value: event.detail.value,
-            comparator: (model, attr, value) => {
-              let OrganizationName = model.get("OrganizationName");
-              if(self.SalesProfileStatuscheckboxfilter().length>0){
-                  if(self.SalesProfileStatuscheckboxfilter().includes(model.get("SalesProfileStatus").trim())==true){
+      self.handleValueChanged = (event) => {
+          if (event.detail.value === null || event.detail.value === undefined || event.detail.value === "") {
+            self.datasource(new CollectionDataProvider(self.listaccountscollection));
+          };
+          if (self.filteredCollection === undefined) {
+            self.filteredCollection = self.listaccountscollection.clone();
+            self.filteredDataProvider = new CollectionDataProvider(self.filteredCollection);
+          }
+          var ret = self.listaccountscollection.where({
+            OrganizationName: {
+              value: event.detail.value,
+              comparator: (model, attr, value) => {
+                let OrganizationName = model.get("OrganizationName");
+                if(self.SalesProfileStatuscheckboxfilter().length>0){
+                    if(self.SalesProfileStatuscheckboxfilter().includes(model.get("SalesProfileStatus").trim())==true){
+                      return OrganizationName.toLowerCase().includes(value.toLowerCase());
+                    }else{
+                      return false;
+                    }
+                }else{
+                  if(value.length>0){
                     return OrganizationName.toLowerCase().includes(value.toLowerCase());
                   }else{
-                    return false;
+                    return true;
                   }
-              }else{
-                  return OrganizationName.toLowerCase().includes(value.toLowerCase());
-              }
+                }
+              },
             },
-          },
-        });
-        this.filteredCollection.reset(ret);
-        this.datasource(this.filteredDataProvider);
+          });
+          self.filteredCollection.reset(ret);
+          self.datasource(self.filteredDataProvider);
       };
 
        //filter popup
@@ -122,9 +127,40 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       };
 
       self.cancelListener = function() {
-          document.getElementById('search1').focus();
-          document.getElementById('search1').value= "a";
-          document.getElementById('search1').value= "";
+          if (self.filter() === null || self.filter() === undefined || self.filter() === "") {
+            self.datasource(new CollectionDataProvider(self.listaccountscollection));
+          }
+          if (self.filteredCollection === undefined) {
+            self.filteredCollection = self.listaccountscollection.clone();
+            self.filteredDataProvider = new CollectionDataProvider(self.filteredCollection);
+          }
+          var ret = self.listaccountscollection.where({
+            OrganizationName: {
+              value: self.filter(),
+              comparator: (model, attr, value) => {
+                let OrganizationName = model.get("OrganizationName");
+                if(self.SalesProfileStatuscheckboxfilter().length>0){
+                    if(self.SalesProfileStatuscheckboxfilter().includes(model.get("SalesProfileStatus").trim())==true){
+                      if (self.filter() === null || self.filter() === undefined || self.filter() === "") {
+                        return true;
+                      }else{
+                        return OrganizationName.toLowerCase().includes(value.toLowerCase());
+                      }
+                    }else{
+                      return false;
+                    }
+                }else{
+                  if (self.filter() === null || self.filter() === undefined || self.filter() === "") {
+                    return true;
+                  }else{
+                    return OrganizationName.toLowerCase().includes(value.toLowerCase());
+                  }
+                }
+              },
+            },
+          });
+          self.filteredCollection.reset(ret);
+          self.datasource(self.filteredDataProvider);
           let popup = document.getElementById("popup1");
           popup.close();
       };
