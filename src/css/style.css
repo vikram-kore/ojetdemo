@@ -58,7 +58,7 @@
 }
 
 #dashboardlistview .first_col{
-	width: 50%;
+	width: 40%;
 	display: inline-block;
 }
 
@@ -195,4 +195,18 @@
 
 .demo-popup-footer{
 	text-align: center;
+}
+
+.forth_col{
+	width: 10%;
+    display: inline-block;
+}
+
+.viewaccountheader{
+	height: 60px;
+}
+
+.viewaccountbody{
+	margin-top: 60px;
+	padding: 10px 0px;
 }

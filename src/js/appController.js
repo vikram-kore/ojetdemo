@@ -30,7 +30,8 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-ada
         { path: 'myday', detail: { label: 'My Day', iconClass: 'fa fa-route' } },
         { path: 'tasks', detail: { label: 'Tasks', iconClass: 'fa fa-mouse' } },
         { path: 'notifications', detail: { label: 'Notifications', iconClass: 'fa fa-bell' } },
-        { path: 'addaccount', detail: { label: 'Add Account', iconClass: 'fa fa-plus' } }
+        { path: 'addaccount', detail: { label: 'Add Account', iconClass: 'fa fa-plus' } },
+        { path: 'accountdetails', detail: { label: 'View Account', iconClass: 'fa fa-plus' } }
       ];
 
       self.router = new CoreRouter(navData, {
@@ -56,7 +57,7 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-ada
 
       this.navDataProvidertab = new ArrayDataProvider(navDatatabs.slice(1), {keyAttributes: "path"});
 
-      this.navDataProvider = new ArrayDataProvider(navData.slice(1), {keyAttributes: "path"});
+      this.navDataProvider = new ArrayDataProvider(navData.slice(1).slice(0,5), {keyAttributes: "path"});
 
       self.toggleDrawer = function() {
         self.navDrawerOn = true;

@@ -1,0 +1,25 @@
+<div class="oj-hybrid-applayout-page">
+  <div class="oj-applayout-fixed-top">
+    <header role="banner" class="oj-flex-bar oj-hybrid-applayout-header oj-sm-align-items-center viewaccountheader" style="z-index: 1;" class="demo-transparent-header oj-hybrid-applayout-header-no-border">
+      <div class="oj-flex-bar-start">
+        <oj-button class='demo-back-button' on-oj-action='[[goBack]]' display='icons' chroming='half'>
+          <span slot='startIcon' class='oj-hybrid-applayout-header-icon-back oj-fwk-icon'></span>
+          Go Back
+        </oj-button>
+      </div>
+      <div class="oj-hybrid-applayout-bar-title" style="min-width:65%;">
+          <h1 class="oj-hybrid-applayout-header-title">
+            View Account
+          </h1>
+      </div>
+    </header>
+  </div>
+  <!-- This is where your main page content will be loaded -->
+  <div class="oj-applayout-content viewaccountbody">
+    <div role="main" class="oj-hybrid-applayout-content">
+        <account-details
+         data="[[routedparams]]" 
+        ></account-details>
+    </div>
+  </div>
+</div>

@@ -64,7 +64,7 @@
       
       <oj-module config="[[moduleAdapter.koObservableConfig]]" animation="[[moduleAdapter.animation]]"></oj-module>
       
-      <oj-bind-if test="[[selection.path() !== 'addaccount']]">
+      <oj-bind-if test="[[selection.path() !== 'addaccount' && selection.path() !== 'accountdetails']]">
         <div class="oj-applayout-fixed-bottom">
           <div role="navigation" class="oj-hybrid-applayout-navbar-app">
             <oj-navigation-list id="navList" class="oj-navigationlist-stack-icon-label"

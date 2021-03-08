@@ -169,6 +169,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           self.router.go({path:'addaccount',params:{}});
       };
 
+      self.showaccountDetails = function (SyncLocalId, PartyNumber, PartyNumber, OrganizationName, SalesProfileStatus, OrganizationDEO_Status_c, NextVisit, LastVisit) {
+        self.router.go({
+          path: 'accountdetails', params: {
+            "SyncLocalId": SyncLocalId+"",
+            "PartyNumber": PartyNumber+"",
+            "OrganizationName": OrganizationName+"",
+            "SalesProfileStatus": SalesProfileStatus+"",
+            "OrganizationDEO_Status_c": OrganizationDEO_Status_c+"",
+            "NextVisit": NextVisit+"",
+            "LastVisit": LastVisit+""
+          }
+        });
+      }
+
     }
     return DashboardViewModel;
   }

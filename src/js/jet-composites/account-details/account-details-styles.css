@@ -1,0 +1,21 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   account-details .account-details-value-text {
+   color: var(--account-details-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+account-details:not(.oj-complete){
+  visibility: hidden;
+}
+
+account-details{
+	min-height: 50px;
+	width: 50px;
+}
+
+.accountdetailsview{
+	padding: 3%;
+}
