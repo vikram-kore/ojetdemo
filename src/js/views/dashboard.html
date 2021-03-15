@@ -13,7 +13,7 @@
       <div class="oj-flex-bar-end">
         <div class="float-row-left">
           <oj-bind-text value="{{recordcount}}"></oj-bind-text>
-         Active Accounts 
+          Accounts 
         </div>
         <div class="float-row-right">
           <oj-button id='btnGo' on-oj-action='[[openListener]]' display='icons'>
@@ -21,9 +21,22 @@
           </oj-button>
         </div>
       </div>
+      <div class="oj-flex dashboardlistheader">
+        <div class="oj-flex-item  oj-sm-4">
+          Account Name
+        </div>
+        <div class="oj-flex-item  oj-sm-3">
+          Last Visit
+        </div>
+        <div class="oj-flex-item  oj-sm-3">
+          Next Visit
+        </div>
+        <div class="oj-flex-item  oj-sm-2">
+        </div>
+      </div>
     </header>
   </div>
-  <div class="oj-applayout-content">
+  <div class="oj-applayout-content dashboard-view">
     <div role="main" class="oj-hybrid-applayout-content dashboardview">
       <oj-list-view id="dashboardlistview" aria-label="list to show selection features" 
           data="[[datasource]]">

@@ -19,13 +19,13 @@
 }
 
 .dashboardlist{
-	height: 150px;
+	height: 180px;
 }
 
 .dashboardlist .oj-flex-bar-middle{
 	position: absolute;
     width: 90%;
-    top: 35%;
+    top: 28%;
     height: 45px;
 }
 
@@ -36,7 +36,7 @@
 
 .dashboardlist .oj-flex-bar-end{
 	position: absolute;
-    top: 68%;
+    top: 55%;
     width: 90%;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .dashboardlist .oj-hybrid-applayout-bar-title{
-	top: 10%;
+	top: 8%;
 }
 
 #dashboardlistview .first_col{
@@ -209,4 +209,10 @@
 .viewaccountbody{
 	margin-top: 60px;
 	padding: 10px 0px;
+}
+
+.dashboardlistheader{
+	position: absolute;
+    top: 83%;
+    width: 100%;
 }

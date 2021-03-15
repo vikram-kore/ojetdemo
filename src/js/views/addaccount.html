@@ -85,6 +85,11 @@
                       value='{{accountforminfo.state}}' 
                       data="[[statesdp]]" required='true'>
               </oj-select-single>
+              <oj-select-single id="gender" label-hint="Select Gender"
+                      placeholder='Select Gender' 
+                      value='{{accountforminfo.gender}}' 
+                      data="[[gendersdp]]" >
+              </oj-select-single>
               <br><br><strong>GPS Coordinate <oj-button on-oj-action="[[getLocation]]" style="float:right;">Get data from gps</oj-button></strong><br><br>
               <oj-input-text id="latitude" value="{{accountforminfo.latitude}}"
               label-hint="Latitude" label-edge="inside" required='true'></oj-input-text>

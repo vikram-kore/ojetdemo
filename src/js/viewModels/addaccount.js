@@ -75,19 +75,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
                               if(result9 === "valid"){
                                 document.getElementById("state").validate().then((result10) => {
                                   if(result10 === "valid"){
-                                    document.getElementById("latitude").validate().then((result11) => {
-                                      if(result11 === "valid"){
-                                        document.getElementById("longitude").validate().then((result12) => {
-                                          if(result12 === "valid"){
-                                            document.getElementById("addresstype").validate().then((result13) => {
-                                              if(result13 === "valid"){
-                                                self.steptxt("Step 3 / Step 4");
-                                                let selectedStep = train.getStep(75);
-                                                self.step(75);
-                                                self.selectedStepValue('75');
-                                                if (selectedStep != null) {
-                                                  self.selectedStepLabel(selectedStep.label);
-                                                }
+                                    document.getElementById("gender").validate().then((result10) => {
+                                      if(result10 === "valid"){
+                                        document.getElementById("latitude").validate().then((result11) => {
+                                          if(result11 === "valid"){
+                                            document.getElementById("longitude").validate().then((result12) => {
+                                              if(result12 === "valid"){
+                                                document.getElementById("addresstype").validate().then((result13) => {
+                                                  if(result13 === "valid"){
+                                                    self.steptxt("Step 3 / Step 4");
+                                                    let selectedStep = train.getStep(75);
+                                                    self.step(75);
+                                                    self.selectedStepValue('75');
+                                                    if (selectedStep != null) {
+                                                      self.selectedStepLabel(selectedStep.label);
+                                                    }
+                                                  }
+                                                });
                                               }
                                             });
                                           }
@@ -241,6 +245,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
           keyAttributes: "value",
       });
 
+      let genders = [
+          { value: "A", label: "Male" },
+          { value: "B", label: "Female" }
+      ];
+      self.gendersdp = new ArrayDataProvider(genders, {
+          keyAttributes: "value",
+      });
+
       let ctypes = [
           { value: "A", label: "Contact types 1" },
           { value: "B", label: "Contact types 2" },
@@ -315,6 +327,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojcorerouter', 'appController', "ojs/ojbo
           city : ko.observable(),
           pincode : ko.observable(),
           state : ko.observable(),
+          gender : ko.observable(),
           latitude :ko.observable(),
           longitude :ko.observable(),
           addresstype :ko.observable("A"),
